@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Incidents informatiques</h1>
+<p class="lead">Signalez un problème dans une salle ou un laboratoire et suivez son traitement jusqu'à la résolution.</p>
+<div class="board">
+  {% for s, nom in STATUTS.items() %}
+  <a class="col {{ s }}" href="{{ url_for('liste', statut=s) }}"><strong>{{ compte[s] }}</strong><span>{{ nom }}</span></a>
+  {% endfor %}
+</div>
+<div class="row" style="margin-top:2rem"><h2 style="margin:0">Derniers signalements</h2><a class="btn" href="{{ url_for('nouveau') }}">Signaler un incident</a></div>
+{% if recents %}
+<div class="table-wrap"><table>
+  <thead><tr><th>Incident</th><th>Lieu</th><th>Priorité</th><th>Statut</th></tr></thead>
+  <tbody>{% for i in recents %}
+    <tr><td><a href="{{ url_for('detail', incident_id=i.id) }}">{{ i.titre }}</a></td><td>{{ i.lieu }}</td>
+    <td><span class="badge p-{{ i.priorite }}">{{ PRIORITES[i.priorite] }}</span></td>
+    <td><span class="badge s-{{ i.statut }}">{{ STATUTS[i.statut] }}</span></td></tr>{% endfor %}
+  </tbody></table></div>
+{% else %}
+<div class="card empty">Aucun incident pour le moment. <a href="{{ url_for('nouveau') }}">Signaler le premier</a>.</div>
+{% endif %}
+{% endblock %}

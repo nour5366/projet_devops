@@ -1,0 +1,19 @@
+# Déploiement : utilise l'image publiée dans GHCR (aucun build)
+# Remplacer REMPLACER_PROPRIETAIRE par votre nom d'utilisateur GitHub (en minuscules)
+services:
+  web:
+    image: ghcr.io/REMPLACER_PROPRIETAIRE/gestion-incidents:latest
+    container_name: gestion-incidents
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+    volumes:
+      - incidents_data:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  incidents_data:

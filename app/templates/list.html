@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Incidents{% endblock %}
+{% block content %}
+<div class="row"><h1>Tous les incidents</h1><a class="btn" href="{{ url_for('nouveau') }}">Signaler un incident</a></div>
+<div class="chips" role="group" aria-label="Filtrer par statut">
+  <a class="chip" href="{{ url_for('liste') }}" {% if not filtre %}aria-current="page"{% endif %}>Tous</a>
+  {% for s, nom in STATUTS.items() %}
+  <a class="chip" href="{{ url_for('liste', statut=s) }}" {% if filtre == s %}aria-current="page"{% endif %}>{{ nom }}</a>
+  {% endfor %}
+</div>
+{% if incidents %}
+<div class="table-wrap"><table>
+  <thead><tr><th>N°</th><th>Titre</th><th>Lieu</th><th>Priorité</th><th>Statut</th><th>Créé le</th></tr></thead>
+  <tbody>{% for i in incidents %}
+    <tr><td>#{{ i.id }}</td><td><a href="{{ url_for('detail', incident_id=i.id) }}">{{ i.titre }}</a></td><td>{{ i.lieu }}</td>
+    <td><span class="badge p-{{ i.priorite }}">{{ PRIORITES[i.priorite] }}</span></td>
+    <td><span class="badge s-{{ i.statut }}">{{ STATUTS[i.statut] }}</span></td><td>{{ i.date_creation }}</td></tr>{% endfor %}
+  </tbody></table></div>
+{% else %}
+<div class="card empty">Aucun incident{% if filtre %} avec ce statut{% endif %}.</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Incident #{{ i.id }}{% endblock %}
+{% block content %}
+<p><a href="{{ url_for('liste') }}">Retour à la liste</a></p>
+<h1>#{{ i.id }} {{ i.titre }}</h1>
+<div class="card">
+  <dl class="meta">
+    <dt>Lieu</dt><dd>{{ i.lieu }}</dd>
+    <dt>Priorité</dt><dd><span class="badge p-{{ i.priorite }}">{{ PRIORITES[i.priorite] }}</span></dd>
+    <dt>Statut</dt><dd><span class="badge s-{{ i.statut }}">{{ STATUTS[i.statut] }}</span></dd>
+    <dt>Créé le</dt><dd>{{ i.date_creation }}</dd>
+  </dl>
+  <p style="white-space:pre-wrap;max-width:70ch">{{ i.description }}</p>
+</div>
+<h2>Mettre à jour</h2>
+<div class="row">
+  <form class="inline" method="post" action="{{ url_for('changer_statut', incident_id=i.id) }}">
+    <label>Statut<select name="statut">{% for k, nom in STATUTS.items() %}
+      <option value="{{ k }}" {% if i.statut == k %}selected{% endif %}>{{ nom }}</option>{% endfor %}</select></label>
+    <button class="btn" type="submit">Enregistrer le statut</button>
+  </form>
+  <form method="post" action="{{ url_for('supprimer', incident_id=i.id) }}" onsubmit="return confirm('Supprimer cet incident ?')">
+    <button class="btn danger" type="submit">Supprimer l'incident</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Signaler un incident{% endblock %}
+{% block content %}
+<h1>Signaler un incident</h1>
+<p class="lead">Décrivez le problème et indiquez où il se trouve.</p>
+{% if erreurs %}<ul class="errors" role="alert">{% for e in erreurs %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+<form class="f" method="post">
+  <label>Titre<input name="titre" value="{{ valeurs.titre or '' }}" maxlength="120" required></label>
+  <label>Description<textarea name="description" required>{{ valeurs.description or '' }}</textarea></label>
+  <label>Lieu (salle ou laboratoire)<input name="lieu" value="{{ valeurs.lieu or '' }}" maxlength="80" required></label>
+  <label>Priorité
+    <select name="priorite">{% for k, nom in PRIORITES.items() %}
+      <option value="{{ k }}" {% if valeurs.priorite == k %}selected{% endif %}>{{ nom }}</option>{% endfor %}
+    </select></label>
+  <div><button class="btn" type="submit">Ajouter l'incident</button> <a class="btn ghost" href="{{ url_for('liste') }}">Annuler</a></div>
+</form>
+{% endblock %}

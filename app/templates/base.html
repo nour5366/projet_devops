@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Suivi des incidents{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="top"><div class="top-in">
+    <a class="brand" href="{{ url_for('index') }}">Incidents IT</a>
+    <nav aria-label="Navigation principale">
+      <a href="{{ url_for('liste') }}">Tous les incidents</a>
+      <a href="{{ url_for('nouveau') }}">Signaler un incident</a>
+    </nav>
+  </div></header>
+  <main>
+    {% for m in get_flashed_messages() %}<div class="flash" role="status">{{ m }}</div>{% endfor %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer>Version {{ version }}</footer>
+</body>
+</html>
