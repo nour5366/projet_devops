@@ -108,7 +108,7 @@ def create_app(config=None):
 
     @app.route("/health")
     def health():
-        return jsonify(status="OK")
+        return jsonify(status="ERROR")
 
     @app.route("/api/incidents")
     def api_incidents():
