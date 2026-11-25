@@ -32,9 +32,9 @@ jobs:
     steps:
       - name: Recuperer le code
         uses: actions/checkout@v4
-      - name: Nom du depot en minuscules (obligatoire pour GHCR)
-        id: repo
-        run: echo "name=${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"
+      - name: Nom de l'image en minuscules (obligatoire pour GHCR)
+        id: image
+        run: echo "name=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/gestion-incidents" >> "$GITHUB_OUTPUT"
       - name: Configurer Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Se connecter a GHCR
@@ -49,5 +49,7 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ steps.repo.outputs.name }}:latest
-            ghcr.io/${{ steps.repo.outputs.name }}:${{ github.sha }}
+            ${{ steps.image.outputs.name }}:latest
+            ${{ steps.image.outputs.name }}:${{ github.sha }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
