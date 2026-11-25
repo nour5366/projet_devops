@@ -26,6 +26,8 @@ jobs:
       - name: Executer les tests
         run: pytest -v
       - name: Verifier Docker Compose
-        run: docker compose config -q
+        run: |
+          docker compose config -q
+          docker compose -f compose.deploy.yaml config -q
       - name: Construire l'image Docker
         run: docker compose build
