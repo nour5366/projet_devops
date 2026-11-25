@@ -52,7 +52,7 @@ Code -> Git/GitHub -> GitHub Actions (CI : tests, config Compose, build)
 **cd.yml** : se déclenche sur push vers `main`.
 - `permissions: packages: write` autorise la publication dans GHCR ; `contents: read` la lecture du dépôt.
 - Job `test` puis job `publish` avec `needs: test` : pas d'image publiée si les tests échouent.
-- L'étape `repo` met le nom du dépôt en minuscules (GHCR refuse les majuscules).
+- L'étape `image` fabrique le nom `ghcr.io/<proprietaire en minuscules>/gestion-incidents` (GHCR refuse les majuscules), quel que soit le nom du dépôt GitHub.
 - `docker/login-action` s'authentifie avec `GITHUB_TOKEN` (aucun mot de passe personnel).
 - `docker/build-push-action` construit et publie deux tags : `latest` (version courante) et `github.sha` (version exacte, permet un retour arrière).
 

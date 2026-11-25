@@ -1,8 +1,8 @@
 # Déploiement : utilise l'image publiée dans GHCR (aucun build)
-# Remplacer REMPLACER_PROPRIETAIRE par votre nom d'utilisateur GitHub (en minuscules)
+# Compte GitHub proprietaire du depot : nour5366 (en minuscules). Si le depot change de compte, modifier cette valeur.
 services:
   web:
-    image: ghcr.io/REMPLACER_PROPRIETAIRE/gestion-incidents:latest
+    image: ghcr.io/nour5366/gestion-incidents:latest
     container_name: gestion-incidents
     ports:
       - "5000:5000"
